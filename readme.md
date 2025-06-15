@@ -1,4 +1,6 @@
 # README
+This is a modified version of automatic part segmentation tool for paper [Generalizable Articulated Object Reconstruction from Casually Captured RGBD Videos](https://arxiv.org/abs/2506.08334).
+
 This is an automatic full segmentation  tool based on [Segment-Anything-2](https://github.com/facebookresearch/segment-anything-2) and [Segment-Anything-1](https://github.com/zrporz/segment-anything-1). Our tool performs automatic full segmentation of the video, enabling the tracking of each object and the detection of possible new objects.
 
 
@@ -31,8 +33,11 @@ The code requires `python>=3.10`, as well as `torch>=2.3.1` and `torchvision>=0.
 We use [SAM1](https://github.com/zrporz/segment-anything-1) to provide static segmentation results and use the [SAM2](https://github.com/facebookresearch/segment-anything-2) to track the static segmentation results. You can install them by the following commands
 ```bash
 ### install sam1 and sam2 modules
-pip install -e submodule/segment-anything-1
-pip install -e submoudle/segment-anything-2
+cd submodule/segment-anything-1
+pip install -e .
+cd ../segment-anything-2
+pip install -e .
+cd ../..
 ### download checkpoints
 cd checkpoints/sam1
 bash download.sh

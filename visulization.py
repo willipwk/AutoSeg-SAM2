@@ -39,11 +39,11 @@ if __name__ == '__main__':
 
     npy_name_list = []
     for name in os.listdir(npybasedir):
-        if 'npy' in name:
+        if 'npz' in name:
             npy_name_list.append(name)
     npy_name_list.sort()
     print(npy_name_list)
-    npy_list = [np.load(os.path.join(npybasedir,name)) for name in npy_name_list]
+    npy_list = [np.load(os.path.join(npybasedir,name))['a'] for name in npy_name_list]
     image_list = [Image.open(os.path.join(imagebasedir,name)) for name in image_name_list]
     assert len(npy_list) == len(image_name_list)
     print(len(npy_list))
@@ -100,11 +100,11 @@ if __name__ == '__main__':
     print(image_name_list)
     npy_name_list = []
     for name in os.listdir(npybasedir):
-        if 'npy' in name:
+        if 'npz' in name:
             npy_name_list.append(name)
     npy_name_list.sort()
     print(npy_name_list)
-    npy_list = [np.load(os.path.join(npybasedir,name)) for name in npy_name_list]
+    npy_list = [np.load(os.path.join(npybasedir,name))['a'] for name in npy_name_list]
     image_list = [Image.open(os.path.join(imagebasedir,name)) for name in image_name_list]
 
     assert len(npy_list) == len(image_name_list)

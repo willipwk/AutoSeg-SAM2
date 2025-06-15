@@ -17,9 +17,9 @@ if torch.cuda.get_device_properties(0).major >= 8:
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
 
-from sam2.build_sam import build_sam2_video_predictor, build_sam2
-from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
-
+# from sam2.build_sam import build_sam2_video_predictor, build_sam2
+# from sam2.automatic_mask_generator import SAM2AutomaticMaskGenerator
+from sam2.build_sam import build_sam2_video_predictor
 
 
 
@@ -179,7 +179,7 @@ def save_masks(mask_list,frame_idx,save_dir):
         final_image.save(os.path.join(save_dir,f"mask_{frame_idx:03}.png"))
 
 def save_masks_npy(mask_list,frame_idx,save_dir):
-    np.save(os.path.join(save_dir,f"mask_{frame_idx:03}.npy"),np.array(mask_list))
+    np.savez_compressed(os.path.join(save_dir,f"mask_{frame_idx:03}.npz"), a=np.array(mask_list))
     
 def show_points(coords, labels, ax, marker_size=200):
     pos_points = coords[labels==1]
@@ -394,12 +394,12 @@ if __name__ == '__main__':
     base_dir = args.output_dir
 
     ##### load Sam2 and Sam1 Model #####
-    sam2_checkpoint = "./checkpoints/sam2/sam2_hiera_large.pt"
-    model_cfg = "sam2_hiera_l.yaml"
+    sam2_checkpoint = "checkpoints/sam2/sam2.1_hiera_large.pt"
+    model_cfg = "configs/sam2.1/sam2.1_hiera_l.yaml"
 
     predictor = build_sam2_video_predictor(model_cfg, sam2_checkpoint)
 
-    sam2 = build_sam2(model_cfg, sam2_checkpoint, device ='cuda', apply_postprocessing=False)
+    # sam2 = build_sam2(model_cfg, sam2_checkpoint, device ='cuda', apply_postprocessing=False)
 
     sam_ckpt_path="checkpoints/sam1/sam_vit_h_4b8939.pth"
     sam = sam_model_registry["vit_h"](checkpoint=sam_ckpt_path).to('cuda')
